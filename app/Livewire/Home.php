@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\LikePostEvent;
 use App\Services\PostService;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -28,6 +29,11 @@ class Home extends Component
     public function updatePost(PostService $postService)
     {
         $this->posts = $postService->listPost();
+    }
+
+    public function addLike($postId)
+    {
+        LikePostEvent::dispatch($postId);
     }
 
     public function render()

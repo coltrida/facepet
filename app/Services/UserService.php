@@ -41,4 +41,14 @@ class UserService
         }])
             ->find($idUser)->following;
     }
+
+    public function leggiSeCiSonoNuoveNotifiche($idUser)
+    {
+        return User::find($idUser)->newNotificationUnRead;
+    }
+
+    public function arrivataNuovaNotifica($idUser, $value)
+    {
+        User::find($idUser)->update(['newNotificationUnRead' => $value]);
+    }
 }

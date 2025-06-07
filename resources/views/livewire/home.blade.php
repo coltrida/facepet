@@ -136,7 +136,7 @@
         <div class="col-md-8 col-lg-6 vstack gap-4">
 
             <!-- Story START -->
-            <div class="d-flex gap-2 mb-n3" wire:ignore>
+            <div class="d-flex gap-2 mb-n3">
                 <div class="position-relative">
                     <div class="card border border-2 border-dashed h-150px px-4 px-sm-5 shadow-none d-flex align-items-center justify-content-center text-center">
                         <div>
@@ -214,7 +214,17 @@
                         <!-- Feed react START -->
                         <ul class="nav nav-stack py-3 small">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#!" data-bs-container="body" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-custom-class="tooltip-text-start" data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"> <i class="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)</a>
+                                <a wire:click="addLike({{$post->id}})"
+                                   class="nav-link active"
+                                   href="#!"
+                                   data-bs-container="body"
+                                   data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   data-bs-html="true"
+                                   data-bs-custom-class="tooltip-text-start"
+                                   data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford">
+                                    <i class="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>Comments (12)</a>
