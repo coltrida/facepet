@@ -90,4 +90,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id');
     }
+
+    public function notifies()
+    {
+        return $this->hasMany(Notify::class, 'receiver_id');
+    }
 }

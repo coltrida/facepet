@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AlbumSeeder::class);
         $this->call(PhotoSeeder::class);
         $this->call(CommentPhotoSeeder::class);
+        $this->call(NotifySeeder::class);
 
 
         Storage::disk('public')->deleteDirectory('/posts/');
@@ -50,6 +51,8 @@ class DatabaseSeeder extends Seeder
 
         $fileContent = Storage::disk('local')->get('/profiles/2.jpg');
         Storage::disk('public')->put('/profiles/2.jpg', $fileContent);
+        $fileContent = Storage::disk('local')->get('/profiles/3.jpg');
+        Storage::disk('public')->put('/profiles/3.jpg', $fileContent);
 
         $fileContent = Storage::disk('local')->get('/albums/photo.jpg');
         Storage::disk('public')->put('/albums/photo.jpg', $fileContent);

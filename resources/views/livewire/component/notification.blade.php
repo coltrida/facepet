@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush list-unstyled p-2">
-                        <!-- Notif item -->
+                        {{--<!-- Notif item -->
                         <li>
                             <div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3">
                                 <div class="avatar text-center d-none d-sm-inline-block">
@@ -52,22 +52,25 @@
                                 </div>
                             </div>
                         </li>
-                        <!-- Notif item -->
+                        <!-- Notif item -->--}}
+                        @foreach($myNotifies as $nofity)
                         <li>
-                            <a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3">
+                            <a href="#" class="list-group-item list-group-item-action {{$nofity->read ? '' : 'badge-unread'}}  rounded d-flex border-0 mb-1 p-3">
                                 <div class="avatar text-center d-none d-sm-inline-block">
-                                    <div class="avatar-img rounded-circle bg-success"><span class="text-white position-absolute top-50 start-50 translate-middle fw-bold">WB</span></div>
+                                    <img class="avatar-img rounded-circle"
+                                         src="{{$nofity->sender->pathPhoto}}" alt="">
                                 </div>
                                 <div class="ms-sm-3">
                                     <div class="d-flex">
-                                        <p class="small mb-2">StackBros has 15 like and 1 new activity</p>
+                                        <p class="small mb-2">{{$nofity->body}}</p>
                                         <p class="small ms-3">1hr</p>
                                     </div>
                                 </div>
                             </a>
                         </li>
+                        @endforeach
                         <!-- Notif item -->
-                        <li>
+                        {{--<li>
                             <a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 p-3 mb-1">
                                 <div class="avatar text-center d-none d-sm-inline-block">
                                     <img class="avatar-img rounded-circle" src="#" alt="">
@@ -77,7 +80,7 @@
                                     <p class="small ms-3">4hr</p>
                                 </div>
                             </a>
-                        </li>
+                        </li>--}}
                     </ul>
                 </div>
                 <div class="card-footer text-center">
