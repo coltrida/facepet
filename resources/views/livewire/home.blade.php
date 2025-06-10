@@ -147,7 +147,7 @@
                 </div>
 
                 <!-- Stories -->
-                <div id="stories" >
+              {{--  <div id="stories" >
                     <div class="d-flex">
                         <div class="card border border-2 h-150px p-0 px-sm-5 shadow-none d-flex align-items-center justify-content-center text-center">
                             <img src="{{asset('storage/albums/3/5.jpg')}}" alt="">
@@ -169,7 +169,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div>--}}
 
             </div>
             <!-- Story END -->

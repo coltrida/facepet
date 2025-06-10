@@ -19,40 +19,6 @@
                 </div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush list-unstyled p-2">
-                        {{--<!-- Notif item -->
-                        <li>
-                            <div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3">
-                                <div class="avatar text-center d-none d-sm-inline-block">
-                                    <img class="avatar-img rounded-circle" src="#" alt="">
-                                </div>
-                                <div class="ms-sm-3">
-                                    <div class=" d-flex">
-                                        <p class="small mb-2"><b>Judy Nguyen</b> sent you a friend request.</p>
-                                        <p class="small ms-3 text-nowrap">Just now</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <button class="btn btn-sm py-1 btn-primary me-2">Accept </button>
-                                        <button class="btn btn-sm py-1 btn-danger-soft">Delete </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Notif item -->
-                        <li>
-                            <div class="list-group-item list-group-item-action rounded badge-unread d-flex border-0 mb-1 p-3 position-relative">
-                                <div class="avatar text-center d-none d-sm-inline-block">
-                                    <img class="avatar-img rounded-circle" src="#" alt="">
-                                </div>
-                                <div class="ms-sm-3 d-flex">
-                                    <div>
-                                        <p class="small mb-2">Wish <b>Amanda Reed</b> a happy birthday (Nov 12)</p>
-                                        <button class="btn btn-sm btn-outline-light py-1 me-2">Say happy birthday 🎂</button>
-                                    </div>
-                                    <p class="small ms-3">2min</p>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Notif item -->--}}
                         @foreach($myNotifies as $nofity)
                         <li>
                             <a href="#" class="list-group-item list-group-item-action {{$nofity->read ? '' : 'badge-unread'}}  rounded d-flex border-0 mb-1 p-3">
@@ -62,29 +28,25 @@
                                 </div>
                                 <div class="ms-sm-3">
                                     <div class="d-flex">
-                                        <p class="small mb-2">{{$nofity->body}}</p>
-                                        <p class="small ms-3">1hr</p>
+                                        <p class="small mb-2">
+                                            {{$nofity->body}}
+                                            <span>
+                                                <img class="avatar-img" style="height: 50px"
+                                                     src="{{$nofity->post_id ?
+                                                            $nofity->post->pathPhoto :
+                                                            $nofity->photo->pathPhoto}}" alt="">
+                                            </span>
+                                        </p>
+                                        <p class="smaller ms-3">{{$nofity->created_at->diffForHumans()}}</p>
                                     </div>
                                 </div>
                             </a>
                         </li>
                         @endforeach
-                        <!-- Notif item -->
-                        {{--<li>
-                            <a href="#" class="list-group-item list-group-item-action rounded d-flex border-0 p-3 mb-1">
-                                <div class="avatar text-center d-none d-sm-inline-block">
-                                    <img class="avatar-img rounded-circle" src="#" alt="">
-                                </div>
-                                <div class="ms-sm-3 d-flex">
-                                    <p class="small mb-2"><b>Bootstrap in the news:</b> The search giant’s parent company, Alphabet, just joined an exclusive club of tech stocks.</p>
-                                    <p class="small ms-3">4hr</p>
-                                </div>
-                            </a>
-                        </li>--}}
                     </ul>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="#" class="btn btn-sm btn-primary-soft">See all incoming activity</a>
+                    <a href="#" class="btn btn-sm btn-primary-soft">See all incoming notifies</a>
                 </div>
             </div>
         </div>

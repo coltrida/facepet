@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use App\Events\LikePostEvent;
+use App\Services\NotifyService;
 use App\Services\PostService;
+use Illuminate\Http\Request;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -31,9 +33,23 @@ class Home extends Component
         $this->posts = $postService->listPost();
     }
 
-    public function addLike($postId)
+    public function addLike($postId, NotifyService $notifyService, PostService $postService)
     {
-        LikePostEvent::dispatch($postId);
+        $request = new Request();
+        $postWithUser = $postService->post($postId);
+        $request->merge([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $postWithUser->user_id,
+            'post_id' => $postId,
+            'read' => 0,
+            'body' => 'A '.auth()->user()->username .' piace il tuo post'
+        ]);
+
+        $notify = $notifyService->createNotify($request);
+
+        if ($notify){
+            LikePostEvent::dispatch($postId);
+        }
     }
 
     public function render()

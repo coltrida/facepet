@@ -45,7 +45,7 @@ class PostService
 
     public function post($idPost)
     {
-        return Post::find($idPost);
+        return Post::with('user')->find($idPost);
     }
 
     public function deletePost($idPost)

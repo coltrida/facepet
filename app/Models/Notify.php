@@ -17,4 +17,14 @@ class Notify extends Model
     {
         return $this->hasMany(User::class, 'receiver_id', 'id');
     }
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
+    public function photo()
+    {
+        return $this->belongsTo(Photo::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Notify;
 use App\Models\User;
 
 class NotifyService
@@ -11,5 +12,10 @@ class NotifyService
         return User::with(['notifies' => function($n){
             $n->with('sender')->latest()->take(4);
         }])->find($idUser)->notifies;
+    }
+
+    public function createNotify($request)
+    {
+        return Notify::create($request->all());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Post;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,6 +17,7 @@ class LikePostEvent implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $postId;
+    public $postOwnerId; // New property to store the owner's ID
 
     /**
      * Create a new event instance.
@@ -23,6 +25,9 @@ class LikePostEvent implements ShouldBroadcastNow
     public function __construct($postId)
     {
         $this->postId = $postId;
+        // Fetch the post to get the owner's ID when the event is constructed
+        $post = Post::find($postId);
+        $this->postOwnerId = $post ? $post->user_id : null;
     }
 
     /**
@@ -33,7 +38,10 @@ class LikePostEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('like-channel'),
+            new PrivateChannel('user.' . $this->postOwnerId),
         ];
     }
 }
+
+
+

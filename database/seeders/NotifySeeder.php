@@ -31,7 +31,7 @@ class NotifySeeder extends Seeder
                 'photo_id' => null,
                 'read' => 1,
                 'body' => 'a Mr. Wiley piace il tuo post',
-                'created_at' => Carbon::now()
+                'created_at' => Carbon::now()->subHours(2)
             ],
             [
                 'sender_id' => 4,
@@ -40,7 +40,7 @@ class NotifySeeder extends Seeder
                 'photo_id' => null,
                 'read' => 0,
                 'body' => 'a cacao3 piace il tuo post',
-                'created_at' => Carbon::now()
+                'created_at' => Carbon::now()->subHours(8)
             ],
             [
                 'sender_id' => 4,
@@ -58,7 +58,7 @@ class NotifySeeder extends Seeder
                 'photo_id' => 1,
                 'read' => 1,
                 'body' => 'a Jared piace la tua foto',
-                'created_at' => Carbon::now()
+                'created_at' => Carbon::now()->subHours(3)
             ],
             [
                 'sender_id' => 4,
