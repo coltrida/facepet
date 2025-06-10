@@ -17,11 +17,8 @@ class Notification extends Component
     // USA QUESTO METODO PER I LISTENER DINAMICI
     public function getListeners()
     {
-        // Assicurati che l'utente sia autenticato prima di creare il listener
         if (Auth::check()) {
             return [
-                // 'echo-private:channel-name,EventName' => 'methodToCall'
-                // Questa è la sintassi corretta per un canale privato dinamico
                 'echo-private:user.' . Auth::id() . ',LikePostEvent' => 'gestioneNuovaNotifica',
             ];
         }
@@ -34,8 +31,6 @@ class Notification extends Component
         $this->myNotifies = $notifyService->myLastNotify(Auth::id()); // Usa Auth::id()
     }
 
-    // Rimuovi o commenta l'attributo #[On] qui per questo specifico listener
-    // #[On('user.{user.id}')] // <-- Rimuovi o commenta questa riga!
     public function gestioneNuovaNotifica(UserService $userService, NotifyService $notifyService)
     {
         $this->newNotificationUnread = true;
@@ -44,10 +39,16 @@ class Notification extends Component
         $this->dispatch('refreshNotifications'); // Esempio: dispatch un evento per riaggiornare la UI
     }
 
-    public function readNotifications(UserService $userService)
+    public function readNotifications(UserService $userService, NotifyService $notifyService)
     {
         $this->newNotificationUnread = false;
         $userService->arrivataNuovaNotifica(Auth::id(), 0);
+        $notifyService->readAllNotifications(Auth::id());
+    }
+
+    public function readNotify($idNotify, NotifyService $notifyService)
+    {
+        $notifyService->readNotify($idNotify);
     }
 
     public function render()

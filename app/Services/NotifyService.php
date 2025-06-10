@@ -18,4 +18,17 @@ class NotifyService
     {
         return Notify::create($request->all());
     }
+
+    public function readNotify($idNotify)
+    {
+        Notify::find($idNotify)
+            ->update([
+                'read' => 1
+            ]);
+    }
+
+    public function readAllNotifications($idUser)
+    {
+        User::find($idUser)->notifies()->update(['read' => 1]);
+    }
 }

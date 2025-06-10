@@ -21,7 +21,10 @@
                     <ul class="list-group list-group-flush list-unstyled p-2">
                         @foreach($myNotifies as $nofity)
                         <li>
-                            <a href="#" class="list-group-item list-group-item-action {{$nofity->read ? '' : 'badge-unread'}}  rounded d-flex border-0 mb-1 p-3">
+                            <a wire:click="readNotify({{$nofity->id}})" href="{{$nofity->post_id ?
+                                       route('post-details',$nofity->post_id) :
+                                       '#'}}"
+                               class="list-group-item list-group-item-action {{$nofity->read ? '' : 'badge-unread'}}  rounded d-flex border-0 mb-1 p-3">
                                 <div class="avatar text-center d-none d-sm-inline-block">
                                     <img class="avatar-img rounded-circle"
                                          src="{{$nofity->sender->pathPhoto}}" alt="">

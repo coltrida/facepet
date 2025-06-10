@@ -36,6 +36,15 @@ class PostService
             ->posts;
     }
 
+    public function postWithComments($idPost)
+    {
+        return Post::with(['user','comments' => function($c){
+            $c->with(['user', 'replies' => function($r){
+                $r->with('user');
+            }]);
+        }])->find($idPost);
+    }
+
     public function myPosts($idUser)
     {
         return User::with(['posts' => function($p){

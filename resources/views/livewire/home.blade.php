@@ -209,8 +209,11 @@
                     <div class="card-body">
                         <p>{{$post->body}}</p>
                         <!-- Card img -->
-                        <img class="card-img"
-                             src="{{asset($post->pathPhoto)}}" alt="post">
+                        <a href="{{route('post-details', $post->id)}}">
+                            <img class="card-img"
+                                 src="{{asset($post->pathPhoto)}}" alt="post">
+                        </a>
+
                         <!-- Feed react START -->
                         <ul class="nav nav-stack py-3 small">
                             <li class="nav-item">
