@@ -279,7 +279,7 @@
                     <div class="card">
                         <!-- Card header START -->
                         <div class="card-header pb-0 border-0">
-                            <h5 class="card-title mb-0">Who to follow</h5>
+                            <h5 class="card-title mb-0">Become follower?</h5>
                         </div>
                         <!-- Card header END -->
 
@@ -296,7 +296,7 @@
                                 </div>
                                 <!-- Title -->
                                 <div class="overflow-hidden">
-                                    <a class="h6 mb-0" href="#!">{{$user->username}} - {{$user->follower}}</a>
+                                    <a class="h6 mb-0" href="#!">{{$user->username}}</a>
                                     <p class="mb-0 small text-truncate">{{$user->type}}</p>
                                 </div>
                                 <!-- Button -->
@@ -318,50 +318,44 @@
                 </div>
                 <!-- Card follow START -->
 
-                <!-- Card News START -->
+                <!-- Card follow START -->
                 <div class="col-sm-6 col-lg-12">
                     <div class="card">
                         <!-- Card header START -->
                         <div class="card-header pb-0 border-0">
-                            <h5 class="card-title mb-0">Today’s news</h5>
+                            <h5 class="card-title mb-0">My latest followers</h5>
                         </div>
                         <!-- Card header END -->
+
                         <!-- Card body START -->
                         <div class="card-body">
-                            <!-- News item -->
-                            <div class="mb-3">
-                                <h6 class="mb-0"><a href="blog-details.html">Ten questions you should answer truthfully</a></h6>
-                                <small>2hr</small>
-                            </div>
-                            <!-- News item -->
-                            <div class="mb-3">
-                                <h6 class="mb-0"><a href="blog-details.html">Five unbelievable facts about money</a></h6>
-                                <small>3hr</small>
-                            </div>
-                            <!-- News item -->
-                            <div class="mb-3">
-                                <h6 class="mb-0"><a href="blog-details.html">Best Pinterest Boards for learning about business</a></h6>
-                                <small>4hr</small>
-                            </div>
-                            <!-- News item -->
-                            <div class="mb-3">
-                                <h6 class="mb-0"><a href="blog-details.html">Skills that you can learn from business</a></h6>
-                                <small>6hr</small>
-                            </div>
-                            <!-- Load more comments -->
-                            <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center" data-bs-toggle="button" aria-pressed="true">
-                                <div class="spinner-dots me-2">
-                                    <span class="spinner-dot"></span>
-                                    <span class="spinner-dot"></span>
-                                    <span class="spinner-dot"></span>
+                            <!-- Connections item START -->
+                            @foreach($myLatestFiveFollower as $user)
+                                <div class="hstack gap-2 mb-3">
+                                    <!-- Avatar -->
+                                    <div class="avatar">
+                                        <a href="#!">
+                                            <img class="avatar-img rounded-circle" src="{{$user->pathPhoto}}" alt="">
+                                        </a>
+                                    </div>
+                                    <!-- Title -->
+                                    <div class="overflow-hidden">
+                                        <a class="h6 mb-0" href="#!">{{$user->username}}</a>
+                                        <p class="mb-0 small text-truncate">{{$user->type}}</p>
+                                    </div>
                                 </div>
-                                View all latest news
-                            </a>
+                            @endforeach
+                            <!-- Connections item END -->
+
+                            <!-- View more button -->
+                            <div class="d-grid mt-3">
+                                <a class="btn btn-sm btn-primary-soft" href="#!">View more</a>
+                            </div>
                         </div>
                         <!-- Card body END -->
                     </div>
                 </div>
-                <!-- Card News END -->
+                <!-- Card follow START -->
             </div>
         </div>
         <!-- Right sidebar END -->

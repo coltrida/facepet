@@ -18,8 +18,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
     Route::get('/post-details/{idPost}', \App\Livewire\PostDetails::class)->name('post-details');
 
-/*    Route::redirect('settings', 'settings/profile');
 
+
+
+
+/*    Route::redirect('settings', 'settings/profile');
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');*/

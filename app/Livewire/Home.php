@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Events\AddNewFollowerEvent;
 use App\Events\LikePostEvent;
 use App\Services\NotifyService;
 use App\Services\PostService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -15,12 +17,31 @@ class Home extends Component
     public $version;
     public $posts;
     public $fiveRandomUserToFollow;
+    public $myLatestFiveFollower;
+
+    // USA QUESTO METODO PER I LISTENER DINAMICI
+    public function getListeners()
+    {
+        if (Auth::check()) {
+            return [
+                'echo-private:user.' . Auth::id() . ',AddNewFollowerEvent' => 'gestioneNuovoFollower',
+            ];
+        }
+        return []; // Restituisce un array vuoto se l'utente non è autenticato
+    }
+
 
     public function mount(PostService $postService, UserService $userService)
     {
         $this->version = now()->timestamp;
         $this->posts = $postService->listPost();
         $this->fiveRandomUserToFollow = $userService->fiveRandomUserToFollow(auth()->id());
+        $this->myLatestFiveFollower = $userService->myLastFiveFriends(auth()->id());
+    }
+
+    public function gestioneNuovoFollower(UserService $userService)
+    {
+        $this->myLatestFiveFollower = $userService->myLastFiveFriends(auth()->id());
     }
 
     #[On('updateMyPic')]
@@ -55,10 +76,22 @@ class Home extends Component
         }
     }
 
-    public function toggleFollower($idUser, UserService $userService)
+    public function toggleFollower($idUser, UserService $userService, NotifyService $notifyService)
     {
         $userService->toggleFollower($idUser);
         /*\Log::info('dopo salvataggio database: '. $this->fiveRandomUserToFollow->find($idUser)->follower);*/
+        $request = new Request();
+        $request->merge([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $idUser,
+            'read' => 0,
+            'body' => auth()->user()->username .' è diventato tuo follwer'
+        ]);
+        $notify = $notifyService->createNotify($request);
+
+        if ($notify){
+            AddNewFollowerEvent::dispatch($idUser);
+        }
     }
 
     public function render()

@@ -20,6 +20,7 @@ class Notification extends Component
         if (Auth::check()) {
             return [
                 'echo-private:user.' . Auth::id() . ',LikePostEvent' => 'gestioneNuovaNotifica',
+                'echo-private:user.' . Auth::id() . ',AddNewFollowerEvent' => 'gestioneNuovaNotifica',
             ];
         }
         return []; // Restituisce un array vuoto se l'utente non è autenticato
@@ -36,7 +37,7 @@ class Notification extends Component
         $this->newNotificationUnread = true;
         $userService->arrivataNuovaNotifica(Auth::id(), 1);
         $this->myNotifies = $notifyService->myLastNotify(Auth::id());
-        $this->dispatch('refreshNotifications'); // Esempio: dispatch un evento per riaggiornare la UI
+    //    $this->dispatch('refreshNotifications'); // Esempio: dispatch un evento per riaggiornare la UI
     }
 
     public function readAllNotifications(UserService $userService, NotifyService $notifyService)

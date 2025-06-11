@@ -33,12 +33,14 @@
                                     <div class="d-flex">
                                         <p class="small mb-2">
                                             {{$nofity->body}}
+                                            @if($nofity->post_id || $nofity->photo_id)
                                             <span>
                                                 <img class="avatar-img" style="height: 50px"
                                                      src="{{$nofity->post_id ?
                                                             $nofity->post->pathPhoto :
                                                             $nofity->photo->pathPhoto}}" alt="">
                                             </span>
+                                            @endif
                                         </p>
                                         <p class="smaller ms-3">{{$nofity->created_at->diffForHumans()}}</p>
                                     </div>
