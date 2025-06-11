@@ -282,85 +282,30 @@
                             <h5 class="card-title mb-0">Who to follow</h5>
                         </div>
                         <!-- Card header END -->
+
                         <!-- Card body START -->
                         <div class="card-body">
                             <!-- Connections item START -->
-                            <div class="hstack gap-2 mb-3">
+                            @foreach($fiveRandomUserToFollow as $user)
+                                <div class="hstack gap-2 mb-3">
                                 <!-- Avatar -->
                                 <div class="avatar">
-                                    <a href="#!"><img class="avatar-img rounded-circle" src="#" alt=""></a>
+                                    <a href="#!">
+                                        <img class="avatar-img rounded-circle" src="{{$user->pathPhoto}}" alt="">
+                                    </a>
                                 </div>
                                 <!-- Title -->
                                 <div class="overflow-hidden">
-                                    <a class="h6 mb-0" href="#!">Judy Nguyen </a>
-                                    <p class="mb-0 small text-truncate">News anchor</p>
+                                    <a class="h6 mb-0" href="#!">{{$user->username}} - {{$user->follower}}</a>
+                                    <p class="mb-0 small text-truncate">{{$user->type}}</p>
                                 </div>
                                 <!-- Button -->
-                                <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus"> </i></a>
+                                <a wire:click="toggleFollower({{$user->id}})"
+                                   class="btn {{$user->followers()->where('follower_id', auth()->id())->exists() ? 'btn-danger' : 'btn-primary-soft'}} rounded-circle icon-md ms-auto" href="#">
+                                    <i class="fa-solid {{$user->followers()->where('follower_id', auth()->id())->exists() ? 'fa-minus' : 'fa-plus'}}"> </i>
+                                </a>
                             </div>
-                            <!-- Connections item END -->
-                            <!-- Connections item START -->
-                            <div class="hstack gap-2 mb-3">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-story">
-                                    <a href="#!"> <img class="avatar-img rounded-circle" src="#" alt=""> </a>
-                                </div>
-                                <!-- Title -->
-                                <div class="overflow-hidden">
-                                    <a class="h6 mb-0" href="#!">Amanda Reed </a>
-                                    <p class="mb-0 small text-truncate">Web Developer</p>
-                                </div>
-                                <!-- Button -->
-                                <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus"> </i></a>
-                            </div>
-                            <!-- Connections item END -->
-
-                            <!-- Connections item START -->
-                            <div class="hstack gap-2 mb-3">
-                                <!-- Avatar -->
-                                <div class="avatar">
-                                    <a href="#"> <img class="avatar-img rounded-circle" src="#" alt=""> </a>
-                                </div>
-                                <!-- Title -->
-                                <div class="overflow-hidden">
-                                    <a class="h6 mb-0" href="#!">Billy Vasquez </a>
-                                    <p class="mb-0 small text-truncate">News anchor</p>
-                                </div>
-                                <!-- Button -->
-                                <a class="btn btn-primary rounded-circle icon-md ms-auto" href="#"><i class="bi bi-person-check-fill"> </i></a>
-                            </div>
-                            <!-- Connections item END -->
-
-                            <!-- Connections item START -->
-                            <div class="hstack gap-2 mb-3">
-                                <!-- Avatar -->
-                                <div class="avatar">
-                                    <a href="#"> <img class="avatar-img rounded-circle" src="#" alt=""> </a>
-                                </div>
-                                <!-- Title -->
-                                <div class="overflow-hidden">
-                                    <a class="h6 mb-0" href="#!">Lori Ferguson </a>
-                                    <p class="mb-0 small text-truncate">Web Developer at StackBros</p>
-                                </div>
-                                <!-- Button -->
-                                <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus"> </i></a>
-                            </div>
-                            <!-- Connections item END -->
-
-                            <!-- Connections item START -->
-                            <div class="hstack gap-2 mb-3">
-                                <!-- Avatar -->
-                                <div class="avatar">
-                                    <a href="#"> <img class="avatar-img rounded-circle" src="#" alt=""> </a>
-                                </div>
-                                <!-- Title -->
-                                <div class="overflow-hidden">
-                                    <a class="h6 mb-0" href="#!">Carolyn Ortiz </a>
-                                    <p class="mb-0 small text-truncate">News anchor</p>
-                                </div>
-                                <!-- Button -->
-                                <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i class="fa-solid fa-plus"> </i></a>
-                            </div>
+                            @endforeach
                             <!-- Connections item END -->
 
                             <!-- View more button -->

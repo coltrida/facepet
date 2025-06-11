@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Carbon\Carbon;
 
 class UserService
 {
@@ -50,5 +51,21 @@ class UserService
     public function arrivataNuovaNotifica($idUser, $value)
     {
         User::find($idUser)->update(['newNotificationUnRead' => $value]);
+    }
+
+    public function fiveRandomUserToFollow($idUser)
+    {
+        return User::where('id', '!=', $idUser)->where('id', '!=', 1) // Exclude the user themselves
+        ->whereDoesntHave('followers', function ($query) use ($idUser) {
+            $query->where('follower_id', $idUser);
+        })
+            ->inRandomOrder() // Order the results randomly
+            ->take(5)         // Take only the first 5 results from the random order
+            ->get();
+    }
+
+    public function toggleFollower($idUser)
+    {
+        User::find(auth()->id())->following()->toggle($idUser, ['crated_at' => Carbon::now()]);
     }
 }

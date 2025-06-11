@@ -39,11 +39,14 @@ class Notification extends Component
         $this->dispatch('refreshNotifications'); // Esempio: dispatch un evento per riaggiornare la UI
     }
 
-    public function readNotifications(UserService $userService, NotifyService $notifyService)
+    public function readAllNotifications(UserService $userService, NotifyService $notifyService)
     {
         $this->newNotificationUnread = false;
         $userService->arrivataNuovaNotifica(Auth::id(), 0);
         $notifyService->readAllNotifications(Auth::id());
+        $this->myNotifies->each(function ($notify) {
+            $notify->read = 1;
+        });
     }
 
     public function readNotify($idNotify, NotifyService $notifyService)

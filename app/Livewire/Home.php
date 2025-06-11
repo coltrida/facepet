@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Events\LikePostEvent;
 use App\Services\NotifyService;
 use App\Services\PostService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -13,11 +14,13 @@ class Home extends Component
 {
     public $version;
     public $posts;
+    public $fiveRandomUserToFollow;
 
-    public function mount(PostService $postService)
+    public function mount(PostService $postService, UserService $userService)
     {
         $this->version = now()->timestamp;
         $this->posts = $postService->listPost();
+        $this->fiveRandomUserToFollow = $userService->fiveRandomUserToFollow(auth()->id());
     }
 
     #[On('updateMyPic')]
@@ -50,6 +53,12 @@ class Home extends Component
         if ($notify){
             LikePostEvent::dispatch($postId);
         }
+    }
+
+    public function toggleFollower($idUser, UserService $userService)
+    {
+        $userService->toggleFollower($idUser);
+        /*\Log::info('dopo salvataggio database: '. $this->fiveRandomUserToFollow->find($idUser)->follower);*/
     }
 
     public function render()

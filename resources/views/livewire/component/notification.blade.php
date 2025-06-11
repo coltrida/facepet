@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="m-0">Notifications <span class="badge bg-danger bg-opacity-10 text-danger ms-2">4 new</span></h6>
-                    <a class="small" href="#" wire:click="readNotifications">Clear all</a>
+                    <a class="small" href="#" wire:click="readAllNotifications">Clear all</a>
                 </div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush list-unstyled p-2">
