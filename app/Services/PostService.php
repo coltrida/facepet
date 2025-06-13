@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 
@@ -65,5 +66,15 @@ class PostService
     public function createPost($request)
     {
         return Post::create($request->all());
+    }
+
+    public function addCommentToPost($request)
+    {
+        return Comment::create($request->all());
+    }
+
+    public function toggleLikeToPost($idPost)
+    {
+        Post::find($idPost)->likes()->toggle(auth()->id());
     }
 }

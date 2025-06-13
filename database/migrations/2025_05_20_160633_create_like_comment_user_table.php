@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Comment::class);
             $table->foreignIdFor(\App\Models\User::class);
-            $table->char('likeUnlike');
             $table->timestamps();
         });
     }

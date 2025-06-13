@@ -18,6 +18,7 @@ class Home extends Component
     public $posts;
     public $fiveRandomUserToFollow;
     public $myLatestFiveFollower;
+    public $commentPost;
 
     // USA QUESTO METODO PER I LISTENER DINAMICI
     public function getListeners()
@@ -57,10 +58,12 @@ class Home extends Component
         $this->posts = $postService->listPost();
     }
 
-    public function addLike($postId, NotifyService $notifyService, PostService $postService)
+    public function toggleLike($postId, NotifyService $notifyService, PostService $postService)
     {
         $request = new Request();
         $postWithUser = $postService->post($postId);
+        $postService->toggleLikeToPost($postId);
+
         $request->merge([
             'sender_id' => auth()->id(),
             'receiver_id' => $postWithUser->user_id,
@@ -91,6 +94,21 @@ class Home extends Component
 
         if ($notify){
             AddNewFollowerEvent::dispatch($idUser);
+        }
+    }
+
+    public function addCommentToPost($postId, PostService $postService)
+    {
+        $request = new Request();
+        $request->merge([
+            'post_id' => $postId,
+            'user_id' => auth()->id(),
+            'body' => $this->commentPost
+        ]);
+
+        $comment = $postService->addCommentToPost($request);
+        if ($comment){
+            $this->reset(['commentPost']);
         }
     }
 
