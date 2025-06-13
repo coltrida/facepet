@@ -46,6 +46,13 @@ class NotifyService
         }])->find($idUser)->notifies->count() > 0;
     }
 
+    public function numeroDiNotificheNonLette($idUser)
+    {
+        return User::with(['notifies' => function($n){
+                $n->where('read', 0);
+            }])->find($idUser)->notifies->count();
+    }
+
     public function deleteNotify($idNotify)
     {
         Notify::find($idNotify)->delete();

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Events\AddNewFollowerEvent;
 use App\Events\LikePostEvent;
+use App\Events\NewCommentPost;
 use App\Services\NotifyService;
 use App\Services\PostService;
 use App\Services\UserService;
@@ -97,7 +98,7 @@ class Home extends Component
         }
     }
 
-    public function addCommentToPost($postId, PostService $postService)
+    public function addCommentToPost($postId, PostService $postService, NotifyService $notifyService)
     {
         $request = new Request();
         $request->merge([
@@ -105,15 +106,32 @@ class Home extends Component
             'user_id' => auth()->id(),
             'body' => $this->commentPost
         ]);
-
         $comment = $postService->addCommentToPost($request);
+
+        $request2 = new Request();
+        $postWithUser = $postService->post($postId);
+        $request2->merge([
+            'sender_id' => auth()->id(),
+            'receiver_id' => $postWithUser->user_id,
+            'post_id' => $postId,
+            'read' => 0,
+            'body' => auth()->user()->username .' ha lasciato un commento al post'
+        ]);
+
+        $notify = $notifyService->createNotify($request2);
+        if ($notify){
+            NewCommentPost::dispatch($postId);
+        }
+
         if ($comment){
             $this->reset(['commentPost']);
         }
     }
 
-    public function render()
+    public function render(PostService $postService)
     {
-        return view('livewire.home');
+        return view('livewire.home', [
+            'numberOfMyPosts' => $postService->numberOfMyPosts(\auth()->id())
+        ]);
     }
 }

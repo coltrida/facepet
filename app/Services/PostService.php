@@ -18,6 +18,11 @@ class PostService
         return Post::with('user')->latest()->get();
     }
 
+    public function numberOfMyPosts($idUser)
+    {
+        return User::with('posts')->find($idUser)->posts->count();
+    }
+
     public function savePost($request)
     {
         return Post::create($request->all());

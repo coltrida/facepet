@@ -21,6 +21,7 @@ class Notification extends Component
             return [
                 'echo-private:user.' . Auth::id() . ',LikePostEvent' => 'gestioneNuovaNotifica',
                 'echo-private:user.' . Auth::id() . ',AddNewFollowerEvent' => 'gestioneNuovaNotifica',
+                'echo-private:user.' . Auth::id() . ',NewCommentPost' => 'gestioneNuovaNotifica',
             ];
         }
         return []; // Restituisce un array vuoto se l'utente non è autenticato
@@ -54,6 +55,9 @@ class Notification extends Component
     {
         $notifyService->readNotify($idNotify);
         $this->loadNotifications($userService, $notifyService); // Ricarica tutte le notifiche e aggiorna $newNotificationUnread
+        if (!$notifyService->controllaSeEsisteNotificaNonLetta(\auth()->id())) {
+            $userService->arrivataNuovaNotifica(\auth()->id(), 0);
+        }
     }
 
     public function loadNotifications(UserService $userService, NotifyService $notifyService)
@@ -62,8 +66,10 @@ class Notification extends Component
         $this->myNotifies = $notifyService->myLastNotify(Auth::id()); // Usa Auth::id()
     }
 
-    public function render()
+    public function render(NotifyService $notifyService)
     {
-        return view('livewire.component.notification');
+        return view('livewire.component.notification', [
+            'numeroDiNotificheNonLette' => $notifyService->numeroDiNotificheNonLette(\auth()->id())
+        ]);
     }
 }
