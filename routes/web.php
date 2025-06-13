@@ -17,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-profile', \App\Livewire\MyProfile::class)->name('myProfile');
     Route::get('/settings', \App\Livewire\Settings::class)->name('settings');
     Route::get('/post-details/{idPost}', \App\Livewire\PostDetails::class)->name('post-details');
+    Route::get('/all-notifications', \App\Livewire\AllNotifications::class)->name('all-notifications');
 
 
 

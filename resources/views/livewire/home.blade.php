@@ -218,7 +218,7 @@
                         <ul class="nav nav-stack py-3 small">
                             <li class="nav-item">
                                 <a wire:click="toggleLike({{$post->id}})"
-                                   class="nav-link active"
+                                   class="nav-link {{$post->likeduser ? 'active' : ''}}"
                                    href="#!"
                                    data-bs-container="body"
                                    data-bs-toggle="tooltip"

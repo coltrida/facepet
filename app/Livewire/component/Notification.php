@@ -50,9 +50,16 @@ class Notification extends Component
         });
     }
 
-    public function readNotify($idNotify, NotifyService $notifyService)
+    public function readNotify($idNotify, NotifyService $notifyService, UserService $userService)
     {
         $notifyService->readNotify($idNotify);
+        $this->loadNotifications($userService, $notifyService); // Ricarica tutte le notifiche e aggiorna $newNotificationUnread
+    }
+
+    public function loadNotifications(UserService $userService, NotifyService $notifyService)
+    {
+        $this->newNotificationUnread = $userService->leggiSeCiSonoNuoveNotifiche(Auth::id()); // Usa Auth::id()
+        $this->myNotifies = $notifyService->myLastNotify(Auth::id()); // Usa Auth::id()
     }
 
     public function render()

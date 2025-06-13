@@ -144,7 +144,7 @@
                         <!-- Comment item END -->
                     </ul>
                     <!-- Comment wrap END -->
-                    <div class="card-footer border-0 pb-0">
+                    {{--<div class="card-footer border-0 pb-0">
                         <!-- Load more comments -->
                         <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center" data-bs-toggle="button" aria-pressed="true">
                             <div class="spinner-dots me-2">
@@ -154,7 +154,7 @@
                             </div>
                             Load more comments
                         </a>
-                    </div>
+                    </div>--}}
                 </div>
             </div>
         </div>
