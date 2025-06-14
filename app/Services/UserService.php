@@ -66,6 +66,16 @@ class UserService
 
     public function toggleFollower($idUser)
     {
+        User::find(auth()->id())->followers()->toggle($idUser, ['crated_at' => Carbon::now()]);
+    }
+
+    public function toggleFollowing($idUser)
+    {
         User::find(auth()->id())->following()->toggle($idUser, ['crated_at' => Carbon::now()]);
+    }
+
+    public function myFriends($idUser)
+    {
+        return User::with('following')->find($idUser)->following;
     }
 }

@@ -28,8 +28,12 @@
                     </div>
                     <!-- Button -->
                     <div class="ms-md-auto d-flex">
-                        <button class="btn btn-danger-soft btn-sm mb-0 me-2"> Remove </button>
-                        <button class="btn btn-primary-soft btn-sm mb-0"> Message </button>
+                        <button wire:click="removeFollower({{$user->id}})"
+                                class="btn btn-danger-soft btn-sm mb-0 me-2">
+                            Remove
+                        </button>
+                        <a href="{{route('messaging', $user->id)}}"
+                           class="btn btn-primary-soft btn-sm mb-0"> Message </a>
                     </div>
                 </div>
             @endforeach
@@ -82,8 +86,12 @@
                     </div>
                     <!-- Button -->
                     <div class="ms-md-auto d-flex">
-                        <button class="btn btn-danger-soft btn-sm mb-0 me-2"> Remove </button>
-                        <button class="btn btn-primary-soft btn-sm mb-0"> Message </button>
+                        <button wire:click="removeFollowing({{$user->id}})"
+                            class="btn btn-danger-soft btn-sm mb-0 me-2">
+                            Remove
+                        </button>
+                        <a href="{{route('messaging', $user->id)}}"
+                           class="btn btn-primary-soft btn-sm mb-0"> Message </a>
                     </div>
                 </div>
             @endforeach

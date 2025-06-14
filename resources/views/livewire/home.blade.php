@@ -227,7 +227,7 @@
                                    data-bs-custom-class="tooltip-text-start"
                                    data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford">
                                     <i class="bi {{$post->likeduser ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}}  pe-1">
-                                    </i>Liked - ({{$post->likes()->count()}})
+                                    </i>Liked ({{$post->likes()->count()}})
                                 </a>
                             </li>
                             <li class="nav-item">

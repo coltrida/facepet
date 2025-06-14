@@ -7,6 +7,17 @@ use Livewire\Component;
 
 class Connections extends Component
 {
+
+    public function removeFollower($idFollower, UserService $userService)
+    {
+        $userService->toggleFollower($idFollower);
+    }
+
+    public function removeFollowing($idFollower, UserService $userService)
+    {
+        $userService->toggleFollowing($idFollower);
+    }
+
     public function render(UserService $userService)
     {
         return view('livewire.component.my-profile.connections', [

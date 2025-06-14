@@ -82,7 +82,7 @@ class Home extends Component
 
     public function toggleFollower($idUser, UserService $userService, NotifyService $notifyService)
     {
-        $userService->toggleFollower($idUser);
+        $userService->toggleFollowing($idUser);
         /*\Log::info('dopo salvataggio database: '. $this->fiveRandomUserToFollow->find($idUser)->follower);*/
         $request = new Request();
         $request->merge([

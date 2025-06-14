@@ -4,10 +4,14 @@
         <div class="card-header d-sm-flex align-items-center justify-content-between border-0 pb-0">
             <h5 class="card-title">{{$albumWithphotos->title}}</h5>
             <!-- Button modal -->
-            <a class="btn btn-sm btn-primary-soft" href="#" data-bs-toggle="modal" data-bs-target="#modalCreateAlbum">
-                <i class="fa-solid fa-plus pe-1"></i>
-                Add Photo
-            </a>
+            <div>
+                <a href="#" wire:click="backToAlbum" class="btn btn-warning">Back</a>
+                <a class="btn btn-sm btn-primary-soft" href="#" data-bs-toggle="modal" data-bs-target="#modalAddPhotoToAlbum">
+                    <i class="fa-solid fa-plus pe-1"></i>
+                    Add Photo
+                </a>
+            </div>
+
         </div>
         <!-- Card header END -->
         <!-- Card body START -->
@@ -135,4 +139,70 @@
         </div>
         <!-- Card body END -->
     </div>
+
+    <!-- Modal create Feed photo START -->
+    <div class="modal fade" id="modalAddPhotoToAlbum" tabindex="-1" aria-labelledby="feedModalAddPhotoToAlbum" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal feed header START -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedModalAddPhotoToAlbum">Add photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal feed header END -->
+
+                <!-- Modal feed body START -->
+                <form wire:submit="savePhoto">
+                    <div class="modal-body">
+                        <!-- Add Feed -->
+                        <div class="d-flex mb-3">
+                            <!-- Avatar -->
+                            <!-- Feed box  -->
+                            <div class="w-100">
+                                <textarea
+                                    class="form-control pe-4 fs-3 lh-1 border-0"
+                                    rows="2"
+                                    placeholder="Comment of photo..."
+                                    wire:model="bodyPhoto"
+                                >
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <!-- Dropzone photo START -->
+                        <div>
+                            <div
+                                x-data="{ uploading: false, progress: 0 }"
+                                x-on:livewire-upload-start="uploading = true"
+                                x-on:livewire-upload-finish="uploading = false"
+                                x-on:livewire-upload-cancel="uploading = false"
+                                x-on:livewire-upload-error="uploading = false"
+                                x-on:livewire-upload-progress="progress = $event.detail.progress"
+                            >
+                                <!-- Dropzone photo START -->
+                                <label class="form-label">Upload Photos</label>
+                                <input type="file" class="form-control" wire:model="newPhoto" placeholder="">
+                                <div x-show="uploading">
+                                    <progress max="100" x-bind:value="progress"></progress>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal feed body END -->
+
+                    <!-- Modal feed footer -->
+                    <div class="modal-footer ">
+                        @if($newPhoto)
+                            <img src="{{$newPhoto->temporaryUrl()}}" alt="" class="rounded" >
+                        @endif
+                        <!-- Button -->
+                        <button type="button" class="btn btn-danger-soft me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success-soft" data-bs-dismiss="modal">Post</button>
+                    </div>
+                </form>
+                <!-- Modal feed footer -->
+            </div>
+        </div>
+    </div>
+    <!-- Modal create Feed photo END -->
 </div>

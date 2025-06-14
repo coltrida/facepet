@@ -14,6 +14,7 @@ class Album extends Model
         $directoryPath = 'albums/' . $this->id;
 
         if (Storage::disk('public')->exists($directoryPath)) {
+
             $files = Storage::disk('public')->files($directoryPath);
 
             if (empty($files)) {

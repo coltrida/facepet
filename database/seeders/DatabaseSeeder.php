@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
 
         Storage::disk('public')->makeDirectory('/posts');
         Storage::disk('public')->makeDirectory('/albums');
+        Storage::disk('public')->makeDirectory('/albums/4');
         Storage::disk('public')->makeDirectory('/profiles');
         Storage::disk('public')->makeDirectory('/landscapes');
         Storage::disk('public')->makeDirectory('/livewire-tmp');
