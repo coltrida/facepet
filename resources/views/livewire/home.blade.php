@@ -53,15 +53,15 @@
                                         <div class="vr"></div>
                                         <!-- User stat item -->
                                         <div>
-                                            <h6 class="mb-0">2.5K</h6>
+                                            <h6 class="mb-0">{{$numberOfMyFollowers}}</h6>
                                             <small>Followers</small>
                                         </div>
                                         <!-- Divider -->
                                         <div class="vr"></div>
                                         <!-- User stat item -->
                                         <div>
-                                            <h6 class="mb-0">365</h6>
-                                            <small>Following</small>
+                                            <h6 class="mb-0">{{$numberOfMyFriends}}</h6>
+                                            <small>My Friends</small>
                                         </div>
                                     </div>
                                     <!-- User stat END -->

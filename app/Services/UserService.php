@@ -7,9 +7,9 @@ use Carbon\Carbon;
 
 class UserService
 {
-    public function aggiornaDati($reques)
+    public function aggiornaDati($request)
     {
-        return User::findOrFail(auth()->id())->update($reques->all());
+        return User::findOrFail(auth()->id())->update($request->all());
     }
 
     public function updatePassword($newPassword)
@@ -85,5 +85,20 @@ class UserService
     public function myFriends($idUser)
     {
         return User::with('following')->find($idUser)->following;
+    }
+
+    public function numberOfMyFriends($idUser)
+    {
+        return User::with('following')->find($idUser)->following->count();
+    }
+
+    public function numberOfMyFollowers($idUser)
+    {
+        return User::with('followers')->find($idUser)->followers->count();
+    }
+
+    public function getUserById($idUser)
+    {
+        return User::find($idUser);
     }
 }

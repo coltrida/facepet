@@ -133,6 +133,8 @@ class Home extends Component
         return view('livewire.home', [
             'numberOfMyPosts' => $postService->numberOfMyPosts(\auth()->id()),
             'myLatestFiveFriends' => $userService->myLastFiveFriends(auth()->id()),
+            'numberOfMyFriends' => $userService->numberOfMyFriends(auth()->id()),
+            'numberOfMyFollowers' => $userService->numberOfMyFollowers(auth()->id()),
         ]);
     }
 }

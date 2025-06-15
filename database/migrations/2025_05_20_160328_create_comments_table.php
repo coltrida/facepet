@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Post::class);
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\Post::class)->constrained('posts')->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\User::class)->constrained('users')->onDelete('cascade');
             $table->text('body');
             $table->timestamps();
         });

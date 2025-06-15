@@ -15,11 +15,20 @@
                         <!-- Info -->
                         <div>
                             <div class="nav nav-divider">
-                                <h6 class="nav-item card-title mb-0"> <a href="#!"> {{auth()->user()->username}} </a></h6>
+                                <h6 class="nav-item card-title mb-0"> <a href="#!"> {{auth()->user()->username}}</a></h6>
                                 <span class="nav-item small"> {{$post->created_at->diffForHumans()}}</span>
                             </div>
                             <p class="mb-0 small">{{auth()->user()->type}}</p>
                         </div>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots"></i>
+                        </a>
+                        <!-- Card feed action dropdown menu -->
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction1">
+                            <li><a class="dropdown-item" href="#!" wire:click="eliminaPost({{$post->id}})"> <i class="bi bi-trash fa-fw pe-2"></i>Delete post</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -168,3 +177,18 @@
         <!-- Card feed item END -->
     @endforeach
 </div>
+
+@script
+<script>
+    Livewire.on('postDeleted', message => {
+        Swal.fire({
+            title: 'Done!',
+            text: message,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    });
+
+</script>
+@endscript

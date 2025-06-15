@@ -21,7 +21,6 @@ class PostService
     public function listPostOfMyFriends($idUser)
     {
         $followingIds = User::find($idUser)->following()->get()->pluck('id');
-        //dd($followingIds);
         return Post::whereIn('user_id', $followingIds)
             ->latest()
             ->get();
