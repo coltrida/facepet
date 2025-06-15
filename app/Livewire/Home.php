@@ -36,14 +36,14 @@ class Home extends Component
     public function mount(PostService $postService, UserService $userService)
     {
         $this->version = now()->timestamp;
-        $this->posts = $postService->listPost();
+        $this->posts = $postService->listPostOfMyFriends(\auth()->id());
         $this->fiveRandomUserToFollow = $userService->fiveRandomUserToFollow(auth()->id());
-        $this->myLatestFiveFollower = $userService->myLastFiveFriends(auth()->id());
+        $this->myLatestFiveFollower = $userService->myLastFiveFollower(auth()->id());
     }
 
     public function gestioneNuovoFollower(UserService $userService)
     {
-        $this->myLatestFiveFollower = $userService->myLastFiveFriends(auth()->id());
+        $this->myLatestFiveFollower = $userService->myLastFiveFollower(auth()->id());
     }
 
     #[On('updateMyPic')]
@@ -56,7 +56,7 @@ class Home extends Component
     #[On('updatePosts')]
     public function updatePost(PostService $postService)
     {
-        $this->posts = $postService->listPost();
+        $this->posts = $postService->listPostOfMyFriends(\auth()->id());
     }
 
     public function toggleLike($postId, NotifyService $notifyService, PostService $postService)
@@ -128,10 +128,11 @@ class Home extends Component
         }
     }
 
-    public function render(PostService $postService)
+    public function render(PostService $postService, UserService $userService)
     {
         return view('livewire.home', [
-            'numberOfMyPosts' => $postService->numberOfMyPosts(\auth()->id())
+            'numberOfMyPosts' => $postService->numberOfMyPosts(\auth()->id()),
+            'myLatestFiveFriends' => $userService->myLastFiveFriends(auth()->id()),
         ]);
     }
 }

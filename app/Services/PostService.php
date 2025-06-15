@@ -18,6 +18,15 @@ class PostService
         return Post::with('user')->latest()->get();
     }
 
+    public function listPostOfMyFriends($idUser)
+    {
+        $followingIds = User::find($idUser)->following()->get()->pluck('id');
+        //dd($followingIds);
+        return Post::whereIn('user_id', $followingIds)
+            ->latest()
+            ->get();
+    }
+
     public function numberOfMyPosts($idUser)
     {
         return User::with('posts')->find($idUser)->posts->count();

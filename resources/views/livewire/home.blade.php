@@ -195,7 +195,7 @@
                                 <!-- Info -->
                                 <div>
                                     <div class="nav nav-divider">
-                                        <h6 class="nav-item card-title mb-0"> <a href="#!"> {{$post->user->name}} </a></h6>
+                                        <h6 class="nav-item card-title mb-0"> <a href="#!"> {{$post->user->username}} </a></h6>
                                         <span class="nav-item small"> 2hr</span>
                                     </div>
                                     <p class="mb-0 small">{{$post->user->description}}</p>
@@ -335,6 +335,45 @@
                         <div class="card-body">
                             <!-- Connections item START -->
                             @foreach($myLatestFiveFollower as $user)
+                                <div class="hstack gap-2 mb-3">
+                                    <!-- Avatar -->
+                                    <div class="avatar">
+                                        <a href="#!">
+                                            <img class="avatar-img rounded-circle" src="{{$user->pathPhoto}}" alt="">
+                                        </a>
+                                    </div>
+                                    <!-- Title -->
+                                    <div class="overflow-hidden">
+                                        <a class="h6 mb-0" href="#!">{{$user->username}}</a>
+                                        <p class="mb-0 small text-truncate">{{$user->type}}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <!-- Connections item END -->
+
+                            <!-- View more button -->
+                            <div class="d-grid mt-3">
+                                <a class="btn btn-sm btn-primary-soft" href="#!">View more</a>
+                            </div>
+                        </div>
+                        <!-- Card body END -->
+                    </div>
+                </div>
+                <!-- Card follow START -->
+
+                <!-- Card follow START -->
+                <div class="col-sm-6 col-lg-12">
+                    <div class="card">
+                        <!-- Card header START -->
+                        <div class="card-header pb-0 border-0">
+                            <h5 class="card-title mb-0">My latest Friends</h5>
+                        </div>
+                        <!-- Card header END -->
+
+                        <!-- Card body START -->
+                        <div class="card-body">
+                            <!-- Connections item START -->
+                            @foreach($myLatestFiveFriends as $user)
                                 <div class="hstack gap-2 mb-3">
                                     <!-- Avatar -->
                                     <div class="avatar">

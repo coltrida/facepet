@@ -27,12 +27,20 @@ class UserService
             ->find($idUser)->followers;
     }
 
-    public function myLastFiveFriends($idUser)
+    public function myLastFiveFollower($idUser)
     {
         return User::with(['followers' => function($f){
             $f->latest()->take(5);
         }])
             ->find($idUser)->followers;
+    }
+
+    public function myLastFiveFriends($idUser)
+    {
+        return User::with(['following' => function($f){
+            $f->latest()->take(5);
+        }])
+            ->find($idUser)->following;
     }
 
     public function myLastFiveFollowings($idUser)
