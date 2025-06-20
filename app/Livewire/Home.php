@@ -19,7 +19,7 @@ class Home extends Component
     public $posts;
     public $fiveRandomUserToFollow;
     public $myLatestFiveFollower;
-    public $commentPost;
+    public $commentPost = [];
 
     // USA QUESTO METODO PER I LISTENER DINAMICI
     public function getListeners()
@@ -36,7 +36,7 @@ class Home extends Component
     public function mount(PostService $postService, UserService $userService)
     {
         $this->version = now()->timestamp;
-        $this->posts = $postService->listPostOfMyFriends(\auth()->id());
+        $this->posts = $postService->listPostOfMineAndMyFriends(auth()->id());
         $this->fiveRandomUserToFollow = $userService->fiveRandomUserToFollow(auth()->id());
         $this->myLatestFiveFollower = $userService->myLastFiveFollower(auth()->id());
     }
@@ -100,13 +100,19 @@ class Home extends Component
 
     public function addCommentToPost($postId, PostService $postService, NotifyService $notifyService)
     {
+        // Valida il commento se necessario
+        $this->validate([
+            'commentPost.' . $postId => 'required|string|max:255',
+        ]);
+
         $request = new Request();
         $request->merge([
             'post_id' => $postId,
             'user_id' => auth()->id(),
-            'body' => $this->commentPost
+            'body' => $this->commentPost[$postId]
         ]);
         $comment = $postService->addCommentToPost($request);
+        $this->commentPost[$postId] = '';
 
         $request2 = new Request();
         $postWithUser = $postService->post($postId);
@@ -123,9 +129,6 @@ class Home extends Component
             NewCommentPost::dispatch($postId);
         }
 
-        if ($comment){
-            $this->reset(['commentPost']);
-        }
     }
 
     public function render(PostService $postService, UserService $userService)

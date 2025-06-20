@@ -5,6 +5,7 @@ namespace App\Livewire\Component;
 use App\Services\AlbumService;
 use App\Services\PhotoService;
 use App\Services\PostService;
+use App\Services\TagService;
 use Illuminate\Http\Request;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -37,12 +38,13 @@ class ModalActions extends Component
         $this->version = now()->timestamp;
     }
 
-    public function savePhotoPost(PostService $postService)
+    public function savePhotoPost(PostService $postService, TagService $tagService)
     {
         $this->validate([
             'photo' => 'image|max:2048', // 2MB Max
         ]);
 
+        // creazione post
         $request = new Request();
         $request->merge([
             'user_id' => auth()->id(),
@@ -51,11 +53,24 @@ class ModalActions extends Component
 
         $post = $postService->createPost($request);
 
+        // creazione tags
+        $words = explode(' ', $this->bodyPost);
+        foreach ($words as $word){
+            if ($word[0] == '#'){
+                $tagService->createTag([
+                    'post_id' => $post->id,
+                    'tag' => $word
+                ]);
+            }
+        }
+
+        // salvataggio foto
         $filename = $post->id. '.jpg';
         $this->photo->storeAs('posts', $filename);
 
         $this->reset(['photo', 'bodyPost']);
 
+        // dispatch evento
         $this->dispatch('updatePosts', 'post saved');
     }
 

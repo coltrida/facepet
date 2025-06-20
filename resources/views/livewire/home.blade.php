@@ -215,7 +215,7 @@
                         </a>
 
                         <!-- Feed react START -->
-                        <ul class="nav nav-stack py-3 small">
+                        <ul class="nav nav-stack pt-3 small">
                             <li class="nav-item">
                                 <a wire:click="toggleLike({{$post->id}})"
                                    class="nav-link {{$post->likeduser ? 'active' : ''}}"
@@ -239,6 +239,32 @@
                         </ul>
                         <!-- Feed react END -->
 
+                        <!-- Feed react START -->
+                        <ul class="nav nav-stack small">
+                            @foreach($post->tags as $tag)
+                            <li class="nav-item">
+                                <a
+                                   class="nav-link active"
+                                   href="#!"
+                                   data-bs-container="body"
+                                   data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   data-bs-html="true"
+                                   data-bs-custom-class="tooltip-text-start"
+                                   data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford">
+                                    {{$tag->tag}}
+                                </a>
+                            </li>
+                            @endforeach
+{{--                            <li class="nav-item">--}}
+{{--                                <a class="nav-link" href="{{route('post-details', $post->id)}}">--}}
+{{--                                    <i class="bi bi-chat-fill pe-1">--}}
+{{--                                    </i>Comments ({{$post->comments()->count()}})--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+                        </ul>
+                        <!-- Feed react END -->
+
                         <!-- Add comment -->
                         <div class="d-flex mb-3">
                             <!-- Avatar -->
@@ -248,7 +274,7 @@
                             </div>
                             <!-- Comment box  -->
                             <form class="nav nav-item w-100 position-relative" wire:submit="addCommentToPost({{$post->id}})">
-                                <textarea wire:model="commentPost" data-autoresize class="form-control pe-5 bg-light" rows="1" placeholder="Add a comment..."></textarea>
+                                <textarea wire:model="commentPost.{{$post->id}}" data-autoresize class="form-control pe-5 bg-light" rows="1" placeholder="Add a comment..."></textarea>
                                 <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0" type="submit">
                                     <i class="bi bi-send-fill"> </i>
                                 </button>

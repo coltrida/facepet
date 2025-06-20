@@ -18,10 +18,11 @@ class PostService
         return Post::with('user')->latest()->get();
     }
 
-    public function listPostOfMyFriends($idUser)
+    public function listPostOfMineAndMyFriends($idUser)
     {
         $followingIds = User::find($idUser)->following()->get()->pluck('id');
-        return Post::whereIn('user_id', $followingIds)
+        $followingIds->push($idUser);
+        return Post::with('user', 'comments', 'likes', 'tags')->whereIn('user_id', $followingIds)
             ->latest()
             ->get();
     }
