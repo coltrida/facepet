@@ -56,7 +56,19 @@ class Home extends Component
     #[On('updatePosts')]
     public function updatePost(PostService $postService)
     {
-        $this->posts = $postService->listPostOfMyFriends(\auth()->id());
+        $this->posts = $postService->listPostOfMineAndMyFriends(auth()->id());
+    }
+
+    #[On('resetPosts')]
+    public function resetPosts(PostService $postService)
+    {
+        $this->posts = $postService->listPostOfMineAndMyFriends(auth()->id());
+    }
+
+    #[On('eseguiRicerca')]
+    public function eseguiRicerca($search, PostService $postService)
+    {
+        $this->posts = $postService->searchPost($search);
     }
 
     public function toggleLike($postId, NotifyService $notifyService, PostService $postService)
@@ -134,7 +146,7 @@ class Home extends Component
     public function render(PostService $postService, UserService $userService)
     {
         return view('livewire.home', [
-            'numberOfMyPosts' => $postService->numberOfMyPosts(\auth()->id()),
+            'numberOfMyPosts' => $postService->numberOfMyPosts(auth()->id()),
             'myLatestFiveFriends' => $userService->myLastFiveFriends(auth()->id()),
             'numberOfMyFriends' => $userService->numberOfMyFriends(auth()->id()),
             'numberOfMyFollowers' => $userService->numberOfMyFollowers(auth()->id()),

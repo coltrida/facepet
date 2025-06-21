@@ -196,7 +196,7 @@
                                 <div>
                                     <div class="nav nav-divider">
                                         <h6 class="nav-item card-title mb-0"> <a href="#!"> {{$post->user->username}} </a></h6>
-                                        <span class="nav-item small"> 2hr</span>
+                                        <span class="nav-item small"> {{$post->created_at->diffForHumans()}}</span>
                                     </div>
                                     <p class="mb-0 small">{{$post->user->description}}</p>
                                 </div>
@@ -251,7 +251,8 @@
                                    data-bs-placement="top"
                                    data-bs-html="true"
                                    data-bs-custom-class="tooltip-text-start"
-                                   data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford">
+{{--                                   data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"--}}
+                                >
                                     {{$tag->tag}}
                                 </a>
                             </li>
@@ -428,6 +429,10 @@
             </div>
         </div>
         <!-- Right sidebar END -->
+
+        <!-- Main Chat START -->
+        <livewire:component.chat />
+        <!-- Main Chat END -->
 
     </div> <!-- Row END -->
 </div>

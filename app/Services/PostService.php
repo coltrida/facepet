@@ -91,4 +91,17 @@ class PostService
     {
         Post::find($idPost)->likes()->toggle(auth()->id());
     }
+
+    public function searchPost($search)
+    {
+        $followingIds = User::find(auth()->id())->following()->get()->pluck('id');
+        $followingIds->push(auth()->id());
+        return Post::with('user', 'comments', 'likes', 'tags')
+            ->whereIn('user_id', $followingIds)
+            ->whereHas('tags', function ($query) use ($search) {
+                $query->where('tag', 'like', '%' . $search . '%');
+            })
+            ->latest()
+            ->get();
+    }
 }
