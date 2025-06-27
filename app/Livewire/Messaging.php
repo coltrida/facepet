@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Services\UserService;
 use Livewire\Component;
 
 class Messaging extends Component
@@ -11,13 +10,11 @@ class Messaging extends Component
 
     public function mount($idUser)
     {
-
+        $this->idUser = $idUser;
     }
 
-    public function render(UserService $userService)
+    public function render()
     {
-        return view('livewire.messaging', [
-            'myFriends' => $userService->myFriends(auth()->id())
-        ]);
+        return view('livewire.messaging');
     }
 }

@@ -87,6 +87,38 @@ class UserService
         return User::with('following')->find($idUser)->following;
     }
 
+    public function myFriendsWithMessages($idUser)
+    {
+        // 1. Esegui l'eager loading delle relazioni sentMessages e receivedMessages.
+        // Questo recupera tutti gli utenti e per ciascuno, tutti i messaggi inviati e ricevuti.
+        $users = User::with(['following' => function($u){
+            $u->with(['sentMessages', 'receivedMessages']);
+        }])->find($idUser)->following;
+
+     //   $users = User::with(['sentMessages', 'receivedMessages'])->get();
+
+        // 2. Per ogni utente, combina e ordina i messaggi.
+        $usersWithSortedMessages = $users->map(function ($user) {
+            // Combina i messaggi inviati e ricevuti in una singola collezione
+            $allMessages = $user->sentMessages->merge($user->receivedMessages);
+
+            // Ordina tutti i messaggi per data di creazione (dal più vecchio al più recente)
+            $sortedMessages = $allMessages->sortBy('created_at')->values();
+
+            // Aggiungi la collezione ordinata all'utente come una nuova proprietà temporanea
+            $user->combined_messages = $sortedMessages;
+
+            // Opzionalmente, se non vuoi che le relazioni originali siano presenti
+            // o se vuoi pulire l'oggetto, puoi rimuoverle:
+             unset($user->sentMessages);
+             unset($user->receivedMessages);
+
+            return $user;
+        });
+
+        return $usersWithSortedMessages;
+    }
+
     public function numberOfMyFriends($idUser)
     {
         return User::with('following')->find($idUser)->following->count();

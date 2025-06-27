@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AlbumSeeder::class);
         $this->call(PhotoSeeder::class);
         $this->call(CommentPhotoSeeder::class);
-    //    $this->call(NotifySeeder::class);
+        $this->call(MessageSeeder::class);
 
 
         Storage::disk('public')->deleteDirectory('/posts/');
